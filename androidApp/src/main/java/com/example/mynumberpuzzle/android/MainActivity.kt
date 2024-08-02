@@ -48,6 +48,8 @@ class MainActivity : ComponentActivity() {
 
 // github
 
+// git pull project
+
 @Composable
 @Preview
 fun numberpuzzle() {
