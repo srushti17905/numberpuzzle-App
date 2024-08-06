@@ -51,41 +51,34 @@ fun numberpuzzle() {
         contentScale = ContentScale.FillBounds
     )
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-    )
-    {
+        modifier = Modifier.fillMaxSize()
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxSize()
                 .weight(.7f)
                 .background(color = rainbow.brown)
-        )
-        {
-        }
+        ) {}
         Row(
             modifier = Modifier
                 .fillMaxSize()
                 .weight(0.1f)
                 .background(color = rainbow.lightcream)
-        )
-        {
-        }
-        Row(
+        ) {}
+        Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxSize()
-                .weight(.6f)
-        )
-        {
+                .weight(.8f)
+        ) {
+                Text(text = result.value , fontSize = 60.sp , color = rainbow.brown)
         }
         Row(
             modifier = Modifier
                 .fillMaxSize()
                 .weight(0.03f)
                 .background(color = rainbow.brown)
-        )
-        {
-        }
+        ) {}
 
         var tt = 0
 
@@ -94,8 +87,7 @@ fun numberpuzzle() {
                 modifier = Modifier
                     .fillMaxSize()
                     .weight(1f)
-            )
-            {
+            ) {
                 for (i in 1..3) {
                     square(rowScope = this, color = rainbow.cream, tt)
                     tt++
@@ -109,14 +101,12 @@ fun numberpuzzle() {
                 .fillMaxSize()
                 .weight(0.03f)
                 .background(color = rainbow.brown)
-        ) {
-        }
+        ) {}
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .weight(1.5f), contentAlignment = Alignment.Center
-        )
-        {
+                .weight(1.3f), contentAlignment = Alignment.Center
+        ) {
             button(text = "Restart")
         }
         Row(
@@ -124,32 +114,28 @@ fun numberpuzzle() {
                 .fillMaxSize()
                 .weight(0.1f)
                 .background(color = rainbow.lightcream)
-        )
-        {
-        }
+        ) {}
         Row(
             modifier = Modifier
                 .fillMaxSize()
                 .weight(0.4f)
                 .background(color = rainbow.brown)
-        ) {
-        }
+        ) {}
     }
 }
 
-var list = mutableStateListOf<String>("1","2","3","4","5","6","7","8","")
-var number = mutableStateOf("")
+var list = mutableStateListOf<String>("3", "", "4", "7", "1", "8", "2", "5", "6")
+var result = mutableStateOf("")
 
 @Composable
-fun square(rowScope: RowScope, color: Color , i : Int ) {
+fun square(rowScope: RowScope, color: Color, i: Int) {
     rowScope.apply {
         Surface(
             modifier = Modifier
                 .fillMaxSize()
                 .weight(1f)
                 .border(BorderStroke(1.1.dp, color = rainbow.brown)), color = color
-        )
-        {
+        ) {
             Box(contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .fillMaxSize()
@@ -158,71 +144,103 @@ fun square(rowScope: RowScope, color: Color , i : Int ) {
                     .background(color = rainbow.light)
                     .clickable {
 
-                            if (list[i] == "8" && list[8] == "") {
-                                list[7] = ""
-                                list[8] = "8"
-                            } else if (list[i] == "8" && list[7] == "") {
-                                list[8] = ""
-                                list[7] = "8"
-                            } else if (list[i] == "7" && list[7] == "") {
-                                list[6] = ""
-                                list[7] = "7"
-                            } else if (list[i] == "7" && list[6] == "") {
-                                list[7] = ""
-                                list[6] = "7"
-                            } else if (list[i] == "6" && list[8] == "") {
-                                list[5] = ""
-                                list[8] = "6"
-                            } else if (list[i] == "6" && list[5] == "") {
-                                list[8] = ""
-                                list[5] = "6"
-                            } else if (list[i] == "5" && list[5] == "") {
-                                list[4] = ""
-                                list[5] = "5"
-                            } else if (list[i] == "5" && list[4] == "") {
-                                list[5] = ""
-                                list[4] = "5"
-                            } else if(list[i] == "5" && list[1] == "")
-                            {
-                                list[4] = ""
-                                list[1] = "5"
+                        // 01 03
+                        if (result.value != "you are win!..") {
+                            when (i) {
+                                0 -> {
+                                    change(first = 0, second = 1)
+                                    change(first = 0, second = 3)
+                                }
+
+                                1 -> {
+                                    change(first = 1, second = 2)
+                                    change(first = 1, second = 0)
+                                    change(first = 1, second = 4)
+                                }
+
+                                2 -> {
+
+                                    change(first = 2, second = 5)
+                                    change(first = 2, second = 1)
+                                }
+
+                                3 -> {
+                                    change(first = 3, second = 0)
+                                    change(first = 3, second = 4)
+                                    change(first = 3, second = 6)
+                                }
+
+                                4 -> {
+                                    change(first = 4, second = 1)
+                                    change(first = 4, second = 3)
+                                    change(first = 4, second = 5)
+                                    change(first = 4, second = 7)
+                                }
+
+                                5 -> {
+                                    change(first = 5, second = 2)
+                                    change(first = 5, second = 4)
+                                    change(first = 5, second = 8)
+                                }
+
+                                6 -> {
+                                    change(first = 6, second = 3)
+                                    change(first = 6, second = 7)
+                                }
+
+                                7 -> {
+                                    change(first = 7, second = 6)
+                                    change(first = 7, second = 4)
+                                    change(first = 7, second = 8)
+                                }
+
+                                8 -> {
+                                    change(first = 8, second = 5)
+                                    change(first = 8, second = 7)
+                                }
                             }
-                            else if (list[i] == "4" && list[4] == "") {
-                                list[3] = ""
-                                list[4] = "4"
-                            } else if (list[i] == "4" && list[3] == "") {
-                                list[4] = ""
-                                list[3] = "4"
-                            } else if (list[i] == "3" && list[5] == "") {
-                                list[2] = ""
-                                list[5] = "3"
-                            } else if (list[i] == "3" && list[2] == "") {
-                                list[5] = ""
-                                list[2] = "3"
-                            } else if (list[i] == "2" && list[2] == "") {
-                                list[1] = ""
-                                list[2] = "2"
-                            } else if (list[i] == "2" && list[1] == "") {
-                                list[2] = ""
-                                list[1] = "2"
-                            } else if (list[i] == "1" && list[1] == "") {
-                                list[0] = ""
-                                list[1] = "1"
-                            } else if (list[i] == "1" && list[0] == "") {
-                                list[1] = ""
-                                list[0] = "1"
-                            } else if (list[i] == "1" && list[2] == "") {
-                                list[1] = ""
-                                list[2] = "1"
-                            } else if (list[i] == "1" && list[1] == "") {
-                                list[2] = ""
-                                list[1] = "1"
-                            } else if (list[i] == "1" && list[5] == "") {
-                                list[2] = ""
-                                list[5] = "1"
+
+                            when (i) {
+                                0 -> {
+                                    cross(0, 1, 2)
+                                    cross(0, 3, 6)
+                                }
+
+                                1 -> {
+                                    cross(1, 4, 7)
+                                }
+
+                                2 -> {
+                                    cross(2, 5, 8)
+                                    cross(2, 1, 0)
+                                }
+
+                                3 -> {
+                                    cross(3, 4, 5)
+                                }
+
+                                5 -> {
+                                    cross(5, 4, 3)
+                                }
+
+                                6 -> {
+                                    cross(6, 3, 0)
+                                    cross(6, 7, 8)
+                                }
+
+                                7 -> {
+                                    cross(7, 4, 1)
+                                }
+
+                                8 -> {
+                                    cross(8, 7, 6)
+                                    cross(8, 5, 2)
+                                }
                             }
-                    }
-            ) {
+
+                            wincondition()
+                        }
+                    }) {
                 Text(
                     text = list[i],
                     fontSize = 80.sp,
@@ -234,23 +252,59 @@ fun square(rowScope: RowScope, color: Color , i : Int ) {
     }
 }
 
+fun change(first: Int, second: Int) {
+
+    if (list[second] == "") {
+        list[second] = list[first]
+        list[first] = ""
+    }
+}
+
+fun cross(i1 : Int , i2 : Int , i3 : Int)
+{
+    if (list[i3] == ""){
+        list[i3] = list[i2]
+        list[i2] = list[i1]
+        list[i1] = ""
+    }
+}
+
+fun wincondition()
+{
+        if (list[0] == "1" && list[1] == "2" && list[2] == "3" && list[3] == "4" && list[4] == "5" && list[5] == "6" && list[6] == "7" && list[7] == "8" && list[8] == "") {
+            result.value = "you are win!.."
+        }
+        else {
+            result.value = ""
+        }
+}
 @Composable
 fun button(text: String) {
     Button(
-        onClick = { Log.d("==>", "Button : ")
-                  },
+        onClick = {
+            Log.d("==>", "Button : ")
+            if (text == "Restart") {
+                list[0] = "3"
+                list[1] = ""
+                list[2] = "4"
+                list[3] = "7"
+                list[4] = "1"
+                list[5] = "8"
+                list[6] = "2"
+                list[7] = "5"
+                list[8] = "6"
+
+                result.value = ""
+            }
+        },
         enabled = true,
         colors = ButtonDefaults.buttonColors(rainbow.brown),
         shape = RoundedCornerShape(50),
         modifier = Modifier.height(60.dp),
         border = BorderStroke(4.dp, color = rainbow.buttoncolor)
-    )
-    {
+    ) {
         Text(
-            text = text,
-            fontSize = 35.sp,
-            fontFamily = FontFamily.Serif,
-            color = rainbow.cream
+            text = text, fontSize = 35.sp, fontFamily = FontFamily.Serif, color = rainbow.cream
         )
     }
 }
