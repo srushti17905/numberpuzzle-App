@@ -42,8 +42,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-// github new change
-// github new 
+// commit change
 
 @Composable
 @Preview
