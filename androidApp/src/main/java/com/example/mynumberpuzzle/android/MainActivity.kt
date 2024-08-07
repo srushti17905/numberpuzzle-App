@@ -43,6 +43,11 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+<<<<<<< HEAD
+=======
+// commit change
+
+>>>>>>> ca17aed78c3ba4f903572be2a6cf87dfd2e998ac
 @Composable
 @Preview
 fun numberpuzzle() {
