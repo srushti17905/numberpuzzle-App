@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsEndWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
@@ -56,22 +57,23 @@ fun numberpuzzle() {
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .weight(.7f)
+                .weight(.6f)
                 .background(color = rainbow.brown)
-        ) {}
+        ) {
+        }
         Row(
             modifier = Modifier
                 .fillMaxSize()
                 .weight(0.1f)
                 .background(color = rainbow.lightcream)
         ) {}
+
         Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
+            contentAlignment = Alignment.Center, modifier = Modifier
                 .fillMaxSize()
                 .weight(.8f)
         ) {
-                Text(text = result.value , fontSize = 60.sp , color = rainbow.brown)
+            Text(text = result.value, fontSize = 60.sp, color = rainbow.brown)
         }
         Row(
             modifier = Modifier
@@ -92,7 +94,6 @@ fun numberpuzzle() {
                     square(rowScope = this, color = rainbow.cream, tt)
                     tt++
                 }
-
             }
         }
 
@@ -101,30 +102,48 @@ fun numberpuzzle() {
                 .fillMaxSize()
                 .weight(0.03f)
                 .background(color = rainbow.brown)
-        ) {}
-        Box(
+        ) {
+        }
+        Row(
             modifier = Modifier
                 .fillMaxSize()
-                .weight(1.3f), contentAlignment = Alignment.Center
+                .weight(1.2f)
         ) {
-            button(text = "Restart")
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(1.3f), contentAlignment = Alignment.Center
+            ) {
+                button(text = "Restart")
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(1.2f), contentAlignment = Alignment.Center
+            ) {
+                click(text = "Reset")
+            }
         }
         Row(
             modifier = Modifier
                 .fillMaxSize()
                 .weight(0.1f)
                 .background(color = rainbow.lightcream)
-        ) {}
+        ) {
+        }
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .weight(0.4f)
+                .weight(0.5f)
                 .background(color = rainbow.brown)
-        ) {}
+        ) {
+        }
     }
 }
 
-var list = mutableStateListOf<String>("3", "", "4", "7", "1", "8", "2", "5", "6")
+var list = mutableStateListOf<String>("1", "2", "3", "4", "5", "6", "", "7", "8")
 var result = mutableStateOf("")
 
 @Composable
@@ -260,41 +279,41 @@ fun change(first: Int, second: Int) {
     }
 }
 
-fun cross(i1 : Int , i2 : Int , i3 : Int)
-{
-    if (list[i3] == ""){
+fun cross(i1: Int, i2: Int, i3: Int) {
+    if (list[i3] == "") {
         list[i3] = list[i2]
         list[i2] = list[i1]
         list[i1] = ""
     }
 }
 
-fun wincondition()
-{
-        if (list[0] == "1" && list[1] == "2" && list[2] == "3" && list[3] == "4" && list[4] == "5" && list[5] == "6" && list[6] == "7" && list[7] == "8" && list[8] == "") {
-            result.value = "you are win!.."
-        }
-        else {
-            result.value = ""
-        }
+fun wincondition() {
+    if (list[0] == "1" && list[1] == "2" && list[2] == "3" && list[3] == "4" && list[4] == "5" && list[5] == "6" && list[6] == "7" && list[7] == "8" && list[8] == "") {
+        result.value = "you are win!.."
+    } else {
+        result.value = ""
+    }
 }
+
 @Composable
 fun button(text: String) {
     Button(
         onClick = {
             Log.d("==>", "Button : ")
-            if (text == "Restart") {
-                list[0] = "3"
-                list[1] = ""
-                list[2] = "4"
-                list[3] = "7"
-                list[4] = "1"
-                list[5] = "8"
-                list[6] = "2"
-                list[7] = "5"
-                list[8] = "6"
+            if (result.value == "you are win!..") {
+                if (text == "Restart") {
+                    list[0] = "1"
+                    list[1] = "2"
+                    list[2] = "3"
+                    list[3] = "4"
+                    list[4] = "5"
+                    list[5] = "6"
+                    list[6] = ""
+                    list[7] = "7"
+                    list[8] = "8"
 
-                result.value = ""
+                    result.value = ""
+                }
             }
         },
         enabled = true,
@@ -305,6 +324,32 @@ fun button(text: String) {
     ) {
         Text(
             text = text, fontSize = 35.sp, fontFamily = FontFamily.Serif, color = rainbow.cream
+        )
+    }
+}
+
+@Composable
+fun click(text: String) {
+    Button(
+        onClick = {
+            Log.d("-->", "button : ")
+            if (result.value != "you are win!..") {
+                if (text == "Reset") {
+                    list.shuffle()
+                }
+            }
+        },
+        enabled = true,
+        colors = ButtonDefaults.buttonColors(rainbow.brown),
+        shape = RoundedCornerShape(50),
+        modifier = Modifier.height(60.dp),
+        border = BorderStroke(4.dp, color = rainbow.buttoncolor)
+    ) {
+        Text(
+            text = text,
+            fontSize = 35.sp,
+            fontFamily = FontFamily.Serif,
+            color = rainbow.cream
         )
     }
 }
